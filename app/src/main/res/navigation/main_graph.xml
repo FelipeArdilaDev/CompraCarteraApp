@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/portfolioPurchaseFragment">
+
+    <fragment
+        android:id="@+id/portfolioPurchaseFragment"
+        android:name="com.example.pruebatecnicaandroid.presentacion.views.fragments.PortfolioPurchaseFragment"
+        android:label="fragment_portfolio_purchase"
+        tools:layout="@layout/fragment_portfolio_purchase" >
+        <action
+            android:id="@+id/action_portfolioPurchaseFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.example.pruebatecnicaandroid.presentacion.views.fragments.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" >
+        <action
+            android:id="@+id/action_paymentFragment_to_ammountFragment2"
+            app:destination="@id/ammountFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/ammountFragment2"
+        android:name="com.example.pruebatecnicaandroid.presentacion.views.fragments.AmmountFragment"
+        android:label="fragment_ammount"
+        tools:layout="@layout/fragment_ammount" >
+        <action
+            android:id="@+id/action_ammountFragment2_to_transactionSuccessFragment"
+            app:destination="@id/transactionSuccessFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/transactionSuccessFragment"
+        android:name="com.example.pruebatecnicaandroid.presentacion.views.fragments.TransactionSuccessFragment"
+        android:label="fragment_transaction_success"
+        tools:layout="@layout/fragment_transaction_success" >
+        <action
+            android:id="@+id/action_transactionSuccessFragment_to_portfolioPurchaseFragment"
+            app:destination="@id/portfolioPurchaseFragment" />
+        <action
+            android:id="@+id/action_transactionSuccessFragment_to_ammountFragment2"
+            app:destination="@id/ammountFragment2" />
+    </fragment>
+</navigation>

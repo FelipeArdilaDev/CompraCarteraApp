@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#eb0725</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="green">#07A033</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="purple">#784ab7</color>
+    <color name="blue">#5095bc</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="secondaryText">#686868</color>
+    <color name="gray">#EFEFEF</color>
+    <color name="cardBackground">#FFFFFF</color>
+    <color name="background">#F2F2F2</color>
+</resources>

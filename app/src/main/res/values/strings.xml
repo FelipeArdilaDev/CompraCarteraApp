@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">PruebaTecnicaAndroid</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lbl_app_bar_title">Compra de deuda</string>
+    <string name="btn_description">TODO</string>
+    <string name="lbl_step_2">paso 2 de 2</string>
+    <string name="lbl_title_purchase">¿Cual es el monto de la deuda a comprar?</string>
+    <string name="lbl_origen">Producto Origen</string>
+    <string name="lbl_testbank">Falabella</string>
+    <string name="lbl_ammount">monto de la deuda</string>
+    <string name="lbl_comprar">Comprar</string>
+    <string name="lbl_step_1">paso 1 de 2</string>
+    <string name="title_card">Ingrese el numero de tarjeta</string>
+    <string name="lbl_card">Numero de la tarjeta</string>
+    <string name="btn_continue">Continuar</string>
+    <string name="lbl_hola">Hola!</string>
+    <string name="lbl_user">Felipe</string>
+    <string name="lbl_products">Mi producto</string>
+    <string name="visa_oro">Visa oro</string>
+    <string name="lbl_number_card">****1234</string>
+    <string name="lbl_aviable">Disponible</string>
+    <string name="lbl_balance">$1,250.50</string>
+    <string name="lbl_compra_de_deuda">Compra de deuda</string>
+    <string name="lbl_compra_de_deuda_exitosa">Compra de deuda exitosa</string>
+    <string name="origen">Origen</string>
+    <string name="lbl_test_bank">Falabella</string>
+    <string name="lbl_txc_number">Numero de transaccion</string>
+    <string name="lbl_number_value">1234567890</string>
+    <string name="lbl_value">valor de la compra</string>
+    <string name="lbl_test_value">$300.000</string>
+    <string name="lbl_date">fecha y hora</string>
+    <string name="lbl_test_date">2024/09/18 05:35:00</string>
+    <string name="lbl_description">Su compra de cartera fue creada exitosamente y se efectuará el pago en los próximos 5 días.</string>
+    <string name="lbl_finalizar">Finalizar</string>
+    <string name="lbl_pago_minimo">pago minimo</string>
+    <string name="lbl_pay_test">$122.000 para el 22-feb</string>
+</resources>
