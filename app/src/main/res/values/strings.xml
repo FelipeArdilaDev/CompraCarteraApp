@@ -35,4 +35,5 @@
     <string name="lbl_finalizar">Finalizar</string>
     <string name="lbl_pago_minimo">pago minimo</string>
     <string name="lbl_pay_test">$122.000 para el 22-feb</string>
+    <string name="title_activity_main_compose">MainActivityCompose</string>
 </resources>

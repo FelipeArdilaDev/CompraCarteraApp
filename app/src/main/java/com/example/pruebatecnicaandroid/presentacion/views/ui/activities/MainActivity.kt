@@ -1,4 +1,4 @@
-package com.example.pruebatecnicaandroid.presentacion.views.activities
+package com.example.pruebatecnicaandroid.presentacion.views.ui.activities
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
