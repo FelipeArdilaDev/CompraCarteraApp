@@ -1,4 +1,4 @@
-package com.example.pruebatecnicaandroid.presentacion.views
+package com.example.pruebatecnicaandroid.presentacion.views.ui
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

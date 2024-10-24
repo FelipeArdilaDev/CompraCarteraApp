@@ -1,4 +1,4 @@
-package com.example.pruebatecnicaandroid.presentacion.views.fragments
+package com.example.pruebatecnicaandroid.presentacion.views.ui.fragments
 
 import android.os.Bundle
 import android.text.Editable

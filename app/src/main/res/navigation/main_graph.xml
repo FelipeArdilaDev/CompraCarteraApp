@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/portfolioPurchaseFragment"
-        android:name="com.example.pruebatecnicaandroid.presentacion.views.fragments.PortfolioPurchaseFragment"
+        android:name="com.example.pruebatecnicaandroid.presentacion.views.ui.fragments.PortfolioPurchaseFragment"
         android:label="fragment_portfolio_purchase"
         tools:layout="@layout/fragment_portfolio_purchase" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"
-        android:name="com.example.pruebatecnicaandroid.presentacion.views.fragments.PaymentFragment"
+        android:name="com.example.pruebatecnicaandroid.presentacion.views.ui.fragments.PaymentFragment"
         android:label="fragment_payment"
         tools:layout="@layout/fragment_payment" >
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/ammountFragment2"
-        android:name="com.example.pruebatecnicaandroid.presentacion.views.fragments.AmmountFragment"
+        android:name="com.example.pruebatecnicaandroid.presentacion.views.ui.fragments.AmmountFragment"
         android:label="fragment_ammount"
         tools:layout="@layout/fragment_ammount" >
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/transactionSuccessFragment"
-        android:name="com.example.pruebatecnicaandroid.presentacion.views.fragments.TransactionSuccessFragment"
+        android:name="com.example.pruebatecnicaandroid.presentacion.views.ui.fragments.TransactionSuccessFragment"
         android:label="fragment_transaction_success"
         tools:layout="@layout/fragment_transaction_success" >
         <action
