@@ -5,18 +5,18 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.fragment.app.viewModels
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.pruebatecnicaandroid.data.local.PreferencesHelper
 import com.example.pruebatecnicaandroid.domain.usecase.GetUserInfoUseCase
 import com.example.pruebatecnicaandroid.presentacion.viewmodel.DashboardViewModel
 import com.example.pruebatecnicaandroid.presentacion.viewmodel.DashboardViewModelFactory
 import com.example.pruebatecnicaandroid.presentacion.views.ui.activities.ui.theme.PruebaTecnicaAndroidTheme
+import com.example.pruebatecnicaandroid.presentacion.views.ui.routes.Routes
+import com.example.pruebatecnicaandroid.presentacion.views.ui.screens.CardNumberScreen
 import com.example.pruebatecnicaandroid.presentacion.views.ui.screens.DashboardScreen
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -27,6 +27,8 @@ class MainActivityCompose : ComponentActivity() {
     @Inject
     lateinit var getUserInfoUseCase: GetUserInfoUseCase
 
+    private lateinit var preferencesHelper: PreferencesHelper
+
     private val dashboardViewModel: DashboardViewModel by viewModels {
         DashboardViewModelFactory(getUserInfoUseCase)
     }
@@ -35,10 +37,30 @@ class MainActivityCompose : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        preferencesHelper = PreferencesHelper(this)
+        dashboardViewModel.loadUserInfo()
         setContent {
             PruebaTecnicaAndroidTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    DashboardScreen()
+                Surface(
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    val navigationController = rememberNavController()
+
+                    NavHost(
+                        navController = navigationController,
+                        startDestination = Routes.DashboardScreen.route
+                    ) {
+                        composable(Routes.DashboardScreen.route) {
+                            DashboardScreen(
+                                dashboardViewModel,
+                                preferencesHelper,
+                                navigationController
+                            )
+                        }
+                        composable(Routes.CardNumberScreen.route) {
+                            CardNumberScreen(navigationController)
+                        }
+                    }
                 }
             }
         }
