@@ -74,8 +74,8 @@ class PaymentFragment : Fragment() {
 
         binding.btnCheckBin.setOnClickListener {
             val cardNumber = binding.edtNumberCard.text.toString()
-            val bin = cardNumber.take(6)
-            viewModel.validateBinAndProceed(bin)
+            //val bin = cardNumber.take(6)
+            //viewModel.validateBinAndProceed(bin)
 
             setupObserver()
         }
