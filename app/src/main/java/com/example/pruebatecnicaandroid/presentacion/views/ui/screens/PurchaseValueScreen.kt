@@ -1,5 +1,6 @@
 package com.example.pruebatecnicaandroid.presentacion.views.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -27,19 +29,24 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.navigation.NavHostController
 import com.example.pruebatecnicaandroid.R
 import com.example.pruebatecnicaandroid.data.local.PreferencesHelper
+import com.example.pruebatecnicaandroid.domain.repository.PurchaseResult
+import com.example.pruebatecnicaandroid.presentacion.viewmodel.TransactionViewModel
+import com.example.pruebatecnicaandroid.presentacion.views.ui.routes.Routes
 import com.example.pruebatecnicaandroid.utils.DPUtils
 import java.text.NumberFormat
 import java.util.Locale
 
-@Preview
 @Composable
-fun PurchaseValueScreen() {
+fun PurchaseValueScreen(
+    txcViewModel: TransactionViewModel,
+    navigationController: NavHostController,
+    name: String
+) {
 
     var cardNumber by rememberSaveable { mutableStateOf("") }
     var errorText by remember { mutableStateOf("") }
@@ -47,6 +54,8 @@ fun PurchaseValueScreen() {
     var ammount by rememberSaveable { mutableStateOf(0L) }
     val context = LocalContext.current
     val preferencesHelper by remember { mutableStateOf(PreferencesHelper(context)) }
+    val txcNumber by txcViewModel.transactionNumber.observeAsState("")
+    val purchaseResult by txcViewModel.PurchaseResult.observeAsState(PurchaseResult(false, ""))
 
 
     Scaffold(
@@ -55,7 +64,9 @@ fun PurchaseValueScreen() {
             MyTopAppbar(onclickIcon = {}, onclickDrawer = {})
         },
         floatingActionButton = {
-            MyFAB { }
+            MyFAB {
+                txcViewModel.fetchTransactionNumber(navigationController, name, ammountValue)
+            }
         },
     ) { padding ->
         Column(Modifier.padding(padding)) {
@@ -90,7 +101,7 @@ fun PurchaseValueScreen() {
             )
 
             Text(
-                text = stringResource(R.string.lbl_testbank),
+                text = name,
                 style = MaterialTheme.typography.titleLarge,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,

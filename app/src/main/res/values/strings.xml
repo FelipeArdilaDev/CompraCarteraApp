@@ -24,7 +24,7 @@
     <string name="lbl_compra_de_deuda">Compra de deuda</string>
     <string name="lbl_compra_de_deuda_exitosa">Compra de deuda exitosa</string>
     <string name="origen">Origen</string>
-    <string name="lbl_test_bank">Falabella</string>
+    <string name="lbl_test_bank">Bank</string>
     <string name="lbl_txc_number">Numero de transaccion</string>
     <string name="lbl_number_value">1234567890</string>
     <string name="lbl_value">valor de la compra</string>

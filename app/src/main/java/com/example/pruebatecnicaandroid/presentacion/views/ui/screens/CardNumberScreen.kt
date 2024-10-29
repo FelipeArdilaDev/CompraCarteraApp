@@ -154,19 +154,24 @@ fun CardNumberTextField(cardNumber: String, errorText: String, onValuechaged: (S
 }
 
 @Composable
-fun MyFAB(onclickDrawer: () -> Unit) {
+fun MyFAB(
+    color: Color = colorResource(R.color.background),
+    coloText: Color = Color.Black,
+    text: String = stringResource(R.string.btn_continue),
+    onclickDrawer: () -> Unit
+) {
     ExtendedFloatingActionButton(
         onClick = {
             onclickDrawer()
         },
-        containerColor = colorResource(R.color.background),
+        containerColor = color,
         contentColor = Color.White,
     ) {
-        Text(text = stringResource(R.string.btn_continue), color = Color.Black)
+        Text(text = text, color = coloText)
         Icon(
             imageVector = Icons.Filled.ChevronRight,
             contentDescription = "Add",
-            tint = Color.Black
+            tint = coloText
         )
     }
 }
@@ -202,7 +207,12 @@ fun ErrorDialog(showDialog: Boolean, ondismiss: () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTopAppbar(onclickIcon: (String) -> Unit, onclickDrawer: () -> Unit) {
+fun MyTopAppbar(
+    containerColor: Color = Color.White,
+    contentColor: Color = Color.Black,
+    onclickIcon: (String) -> Unit,
+    onclickDrawer: () -> Unit
+) {
     TopAppBar(
         title = {
             Box(
@@ -212,16 +222,16 @@ fun MyTopAppbar(onclickIcon: (String) -> Unit, onclickDrawer: () -> Unit) {
                 Text(
                     text = stringResource(R.string.lbl_app_bar_title),
                     fontSize = 20.sp,
-                    color = Color.Black,
+                    color = contentColor,
                     textAlign = TextAlign.Center
                 )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.White,
-            titleContentColor = Color.Black,
-            actionIconContentColor = Color.Black,
-            navigationIconContentColor = Color.Black
+            containerColor = containerColor,
+            titleContentColor = contentColor,
+            actionIconContentColor = contentColor,
+            navigationIconContentColor = contentColor
         ),
         navigationIcon = {
             IconButton(onClick = { onclickDrawer() }) {

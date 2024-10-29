@@ -42,7 +42,7 @@ class CardViewModel @Inject constructor(
                     _binInfo.postValue(response)
                     navigationController.navigate(
                         Routes.PurchaseValueScreen.createRoute(
-                            response.BIN.country.name
+                            response.BIN.issuer!!.name
                         )
                     )
 

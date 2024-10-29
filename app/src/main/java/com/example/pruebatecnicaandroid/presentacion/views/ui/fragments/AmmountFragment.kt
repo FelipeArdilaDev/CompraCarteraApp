@@ -88,7 +88,7 @@ class AmmountFragment : Fragment() {
     private fun setupListener() {
         binding.btnComprar.setOnClickListener {
             binding.progress.visibility = View.VISIBLE
-            viewModel.fetchTransactionNumber()
+           // viewModel.fetchTransactionNumber(navigationController)
             setupObservers()
         }
 
