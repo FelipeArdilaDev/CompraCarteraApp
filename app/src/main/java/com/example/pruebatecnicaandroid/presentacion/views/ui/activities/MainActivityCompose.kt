@@ -44,6 +44,7 @@ class MainActivityCompose : ComponentActivity() {
         enableEdgeToEdge()
         preferencesHelper = PreferencesHelper(this)
         dashboardViewModel.loadUserInfo()
+
         setContent {
             PruebaTecnicaAndroidTheme {
                 Surface(

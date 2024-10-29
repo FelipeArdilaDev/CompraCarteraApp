@@ -9,6 +9,6 @@ object DPUtils {
         val formatter = NumberFormat.getNumberInstance(Locale("es", "CO"))
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = 0
-        return "$${formatter.format(value)}"
+        return formatter.format(value)
     }
 }

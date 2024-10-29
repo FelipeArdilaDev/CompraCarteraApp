@@ -18,14 +18,24 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.TransformedText
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.pruebatecnicaandroid.R
+import com.example.pruebatecnicaandroid.data.local.PreferencesHelper
+import com.example.pruebatecnicaandroid.utils.DPUtils
+import java.text.NumberFormat
+import java.util.Locale
 
 @Preview
 @Composable
@@ -33,6 +43,11 @@ fun PurchaseValueScreen() {
 
     var cardNumber by rememberSaveable { mutableStateOf("") }
     var errorText by remember { mutableStateOf("") }
+    var ammountValue by rememberSaveable { mutableStateOf("") }
+    var ammount by rememberSaveable { mutableStateOf(0L) }
+    val context = LocalContext.current
+    val preferencesHelper by remember { mutableStateOf(PreferencesHelper(context)) }
+
 
     Scaffold(
         containerColor = Color.White,
@@ -40,7 +55,7 @@ fun PurchaseValueScreen() {
             MyTopAppbar(onclickIcon = {}, onclickDrawer = {})
         },
         floatingActionButton = {
-            MyFAB {  }
+            MyFAB { }
         },
     ) { padding ->
         Column(Modifier.padding(padding)) {
@@ -92,11 +107,24 @@ fun PurchaseValueScreen() {
 
             AmmountTextField(cardNumber, errorText) {
                 cardNumber = it
-                if (cardNumber.length in 15..16) {
-                    errorText = ""
+
+                val inputText = cardNumber
+                val cleanString = inputText.replace("[^\\d]".toRegex(), "")
+                val parsed = cleanString.toDoubleOrNull() ?: 0.0
+                val formattedInput = DPUtils.formatCurrency(parsed)
+                ammountValue = formattedInput
+                ammount = preferencesHelper.getBalance()
+
+                errorText = if (parsed > ammount) {
+                    "El monto no debe superar el cupo disponible de ${
+                        DPUtils.formatCurrency(
+                            ammount.toDouble()
+                        )
+                    }"
                 } else {
-                    errorText = "El número de tarjeta debe tener 16 digitos"
+                    ""
                 }
+
 
             }
         }
@@ -105,15 +133,26 @@ fun PurchaseValueScreen() {
 }
 
 @Composable
-fun AmmountTextField(cardNumber: String, errorText: String, onValuechaged: (String) -> Unit) {
+fun AmmountTextField(cardNumber: String, errorText: String, onValueChanged: (String) -> Unit) {
+    val context = LocalContext.current
+    val preferencesHelper by remember { mutableStateOf(PreferencesHelper(context)) }
+    var formattedText by remember { mutableStateOf(cardNumber) }
 
     Column {
         TextField(
-            value = cardNumber,
-            onValueChange = {
-                onValuechaged(it)
-            },
+            value = formattedText,
+            onValueChange = { newValue ->
+                // Remueve cualquier carácter no numérico como el símbolo $ y comas
+                val cleanValue = newValue.replace("[^\\d]".toRegex(), "")
 
+                // Si el campo está vacío, mantén el inputText vacío, si no, aplica el formato
+                formattedText = if (cleanValue.isEmpty()) "" else DPUtils.formatCurrency(
+                    cleanValue.toDoubleOrNull() ?: 0.0
+                )
+
+                onValueChanged(formattedText)
+            },
+            visualTransformation = PesosVisualTransformation(),
             isError = errorText.isNotEmpty(),
             modifier = Modifier
                 .fillMaxWidth()
@@ -130,19 +169,47 @@ fun AmmountTextField(cardNumber: String, errorText: String, onValuechaged: (Stri
             )
 
         Text(
-            text = "Ingrese un monto inferior a 400.000(cupo disponible)",
-            color = if (false) MaterialTheme.colorScheme.error else colorResource(R.color.blue),
+            text = if (errorText.isNotEmpty()) "El monto no debe superar el cupo disponible de ${
+                DPUtils.formatCurrency(
+                    preferencesHelper.getBalance().toDouble()
+                )
+            }" else "Ingrese un monto inferior a ${
+                DPUtils.formatCurrency(
+                    preferencesHelper.getBalance().toDouble()
+                )
+            }(cupo disponible)",
+            color = if (errorText.isNotEmpty()) MaterialTheme.colorScheme.error
+            else colorResource(R.color.blue),
             style = MaterialTheme.typography.bodySmall,
             modifier = Modifier.padding(start = 30.dp, top = 4.dp)
         )
     }
-    if (errorText.isNotEmpty()) {
-        Text(
-            text = errorText,
-            color = MaterialTheme.colorScheme.error,
-            style = MaterialTheme.typography.bodySmall,
-            modifier = Modifier.padding(start = 30.dp, top = 4.dp)
-        )
+}
 
+class PesosVisualTransformation : VisualTransformation {
+    override fun filter(text: AnnotatedString): TransformedText {
+        // Limpia cualquier carácter que no sea un dígito
+        val cleanText = text.text.replace("[^\\d]".toRegex(), "")
+
+        // Convierte a Double y formatea en pesos colombianos
+        val formattedValue = if (cleanText.isNotEmpty()) {
+            "$ ${NumberFormat.getNumberInstance(Locale("es", "CO")).format(cleanText.toDouble())}"
+        } else {
+            "$ "
+        }
+
+        val transformedText = AnnotatedString(formattedValue)
+
+        val offsetMapping = object : OffsetMapping {
+            override fun originalToTransformed(offset: Int): Int {
+                return transformedText.text.length // Coloca el cursor al final del texto
+            }
+
+            override fun transformedToOriginal(offset: Int): Int {
+                return cleanText.length // Devuelve la posición al final del valor limpio
+            }
+        }
+
+        return TransformedText(transformedText, offsetMapping)
     }
 }
